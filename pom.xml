@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.3</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>ru.tronin</groupId>
+    <artifactId>womwear</artifactId>
+    <version>0.0.1</version>
+    <name>womwear</name>
+    <packaging>pom</packaging>
+    <properties>
+        <java.version>16</java.version>
+    </properties>
+    <dependencies>
+    </dependencies>
+    <modules>
+        <!--   Libraries     -->
+        <module>routing-lib</module>
+        <module>core-lib</module>
+
+        <!--    Microservices   -->
+        <module>ms-auth</module>
+        <module>ms-payments</module>
+        <module>ms-products</module>
+        <module>ms-warehouse</module>
+        <module>ms-delivery</module>
+        <module>ms-orders</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
