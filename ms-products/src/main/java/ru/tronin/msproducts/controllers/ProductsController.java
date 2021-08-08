@@ -17,6 +17,7 @@ import ru.tronin.msproducts.services.ProductService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//for ht
 
 @RestController
 @RequestMapping("/api/v1/products")
