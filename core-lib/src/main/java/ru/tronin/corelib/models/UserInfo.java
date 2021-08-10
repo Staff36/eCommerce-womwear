@@ -1,16 +1,21 @@
-package ru.tronin.msauth.models.dto;
+package ru.tronin.corelib.models;
 
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SignUpRequestDto {
+public class UserInfo {
+
+    Long id;
 
     String email;
-    String password;
+
     List<String> roles;
+
 }

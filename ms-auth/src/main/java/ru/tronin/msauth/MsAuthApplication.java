@@ -3,7 +3,7 @@ package ru.tronin.msauth;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "ru.tronin")
 public class MsAuthApplication {
 
     public static void main(String[] args) {

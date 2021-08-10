@@ -22,30 +22,29 @@ public class UserService {
     UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    RolesService rolesService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
 
     public User saveUser(User user) {
-        List<Role> roles = List.of(roleRepository.findByName("ROLE_USER"));
+        String role = "ROLE_USER";
+        List<Role> roles = List.of(rolesService.findByName(role));
         user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     @Transactional
-    public User findByLogin(String login) {
-        User user = userRepository.findUserByLogin(login).orElse(null);
-        if (user == null) {
-            throw new NoEntityException(String.format("User with login %s not found", login));
-        }
+    public User findByEmail(String email) {
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new NoEntityException(String.format("User with email %s not found", email)));
         Hibernate.initialize(user.getRoles());
         return user;
     }
 
-    public User findByLoginAndPassword(String login, String password) {
-        User userFromDB = findByLogin(login);
+    public User findByEmailAndPassword(String email, String password) {
+        User userFromDB = findByEmail(email);
         if (userFromDB != null) {
             if (passwordEncoder.matches(password, userFromDB.getPassword())) {
                 return userFromDB;
@@ -53,6 +52,8 @@ public class UserService {
         }
         return null;
     }
+
+
 
 
 }
