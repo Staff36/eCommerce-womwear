@@ -17,9 +17,9 @@ import java.util.List;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class JWTTokenService implements ITokenService {
-//    @Value("$(jwt.secret)")
-    static String JWT_SECRET = "123124124124";
-//    TODO(НЕ ПОДТЯГИВАЕТСЯ СЕКРЕТ!!!!!)
+
+    @Value("$(jwt.secret)")
+    String JWT_SECRET;
 
     @Override
     public String generateToken(UserInfo user) {
@@ -30,6 +30,7 @@ public class JWTTokenService implements ITokenService {
                 .claim("sub", user.getEmail())
                 .claim("roles", user.getRoles())
                 .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
+                .setExpiration(expirationDate)
                 .compact();
 
         return "Bearer " + compactTokenString;

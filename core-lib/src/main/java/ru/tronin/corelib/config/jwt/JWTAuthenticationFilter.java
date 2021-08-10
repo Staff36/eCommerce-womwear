@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.tronin.corelib.interfaces.ITokenService;
 import ru.tronin.corelib.models.UserInfo;
-import ru.tronin.corelib.service.JWTTokenService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -22,13 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
 
     final ITokenService tokenService;
 
-
+    @Autowired
     public JWTAuthenticationFilter(ITokenService tokenService) {
         this.tokenService = tokenService;
     }
@@ -39,7 +39,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
-
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             UsernamePasswordAuthenticationToken authenticationToken = createToken(authorizationHeader);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
