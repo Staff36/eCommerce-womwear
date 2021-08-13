@@ -39,7 +39,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ") && !tokenService.isRedisHasToken(authorizationHeader)) {
             UsernamePasswordAuthenticationToken authenticationToken = createToken(authorizationHeader);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }

@@ -15,8 +15,6 @@ import ru.tronin.msauth.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -30,6 +28,7 @@ public class AuthController {
 
     @Autowired
     RolesService rolesService;
+
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
@@ -54,6 +53,11 @@ public class AuthController {
                 .build();
         String token = tokenService.generateToken(userInfo);
         return new AuthResponseDto(token);
+    }
+
+    @PostMapping("/logout")
+    public void logout(@RequestHeader(name = "Authorization") String token){
+        tokenService.putTokenToRedis(token);
     }
 
 }
