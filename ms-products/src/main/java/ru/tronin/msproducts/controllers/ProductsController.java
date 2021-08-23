@@ -31,8 +31,8 @@ public class ProductsController {
                                   @RequestParam(name = "min_price", required = false) Double min,
                                   @RequestParam(name = "max_price", required = false) Double max,
                                   @RequestParam(name = "name_part", required = false) String partName) {
-
-        return productService.findPaginatedProducts(min, max, partName, pageable);
+        Page<ProductDto> paginatedProducts = productService.findPaginatedProducts(min, max, partName, pageable);
+        return paginatedProducts;
     }
 
     @GetMapping("/{id}")

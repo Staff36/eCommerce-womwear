@@ -3,7 +3,6 @@ package ru.tronin.routinglib.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +22,8 @@ public class FeignController{
                                   @RequestParam(name = "min_price", required = false) Double min,
                                   @RequestParam(name = "max_price", required = false) Double max,
                                   @RequestParam(name = "name_part", required = false) String partName) {
-        PageImpl<ProductDto> index = (PageImpl<ProductDto>) client.index(pageable, min, max, partName);
+        int i = 22;
+        Page<ProductDto> index = client.index(pageable, min, max, partName);
         return index;
     }
 
