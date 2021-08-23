@@ -10,9 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.tronin.msproducts.models.dto.ProductDto;
 import ru.tronin.msproducts.models.entities.Product;
 import ru.tronin.msproducts.services.ProductService;
+import ru.tronin.routinglib.dtos.ProductDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,5 +69,8 @@ public class ProductsController {
         productService.deleteById(id);
     }
 
-
+    @GetMapping("/test")
+    public String testingMethod(){
+        return "testMethod";
+    }
 }
