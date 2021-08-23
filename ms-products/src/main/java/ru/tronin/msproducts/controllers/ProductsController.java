@@ -1,6 +1,7 @@
 package ru.tronin.msproducts.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductsController {
+    @Value("${jwt.secret}")
+    private String MY_SECRET;
 
     @Autowired
     private ProductService productService;
@@ -71,6 +74,6 @@ public class ProductsController {
 
     @GetMapping("/test")
     public String testingMethod(){
-        return "testMethod";
+        return MY_SECRET;
     }
 }

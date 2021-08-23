@@ -23,7 +23,7 @@ import java.util.List;
 @Slf4j
 public class JWTTokenService implements ITokenService {
 
-    @Value("$(jwt.secret)")
+    @Value("${jwt.secret}")
     String JWT_SECRET;
 
     @Autowired

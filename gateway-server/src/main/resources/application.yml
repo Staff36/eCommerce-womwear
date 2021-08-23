@@ -1,0 +1,60 @@
+server:
+  port: 5555
+
+spring:
+  application:
+    name: gateway-server
+
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      metrics:
+        enabled: true
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: ms-auth
+          uri: lb://ms-auth
+          predicates:
+          - Path=/api/*/auth/**
+
+        - id: ms-products
+          uri: lb://ms-products
+          predicates:
+          - Path=/api/*/products/**
+
+        - id: ms-delivery
+          uri: lb://ms-delivery
+          predicates:
+          - Path=/api/*/delivery/**
+
+        - id: ms-orders
+          uri: lb://ms-orders
+          predicates:
+          - Path=/api/*/orders/**
+
+        - id: ms-payments
+          uri: lb://ms-payments
+          predicates:
+          - Path=/api/*/payments/**
+
+        - id: ms-warehouse
+          uri: lb://ms-warehouse
+          predicates:
+          - Path=/api/*/warehouse/**
+
+eureka:
+  client:
+    fetch-registry: true
+    service-url.defauldZone: ${EUREKA_URI:http://localhost:8761/eureka}

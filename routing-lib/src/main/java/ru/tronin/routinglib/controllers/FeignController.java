@@ -5,11 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.tronin.routinglib.dtos.ProductDto;
+
+import java.beans.ConstructorProperties;
 
 @RestController
 @RequestMapping("/routing")
@@ -30,5 +29,10 @@ public class FeignController{
     @GetMapping("/test")
     public String get(){
         return client.testingMethod();
+    }
+
+    @GetMapping("/{id}")
+    ProductDto showProduct(@PathVariable Long id) {
+    return client.showProduct(id);
     }
 }
