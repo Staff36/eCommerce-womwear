@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.tronin.msproducts.models.entities.Product;
 import ru.tronin.msproducts.services.ProductService;
 import ru.tronin.routinglib.dtos.ProductDto;
+import ru.tronin.routinglib.dtos.RestPageImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,12 +31,11 @@ public class ProductsController {
     private ProductService productService;
 
     @GetMapping()
-    public Page<ProductDto> index(@PageableDefault(size = 12) Pageable pageable,
-                                  @RequestParam(name = "min_price", required = false) Double min,
-                                  @RequestParam(name = "max_price", required = false) Double max,
-                                  @RequestParam(name = "name_part", required = false) String partName) {
-        Page<ProductDto> paginatedProducts = productService.findPaginatedProducts(min, max, partName, pageable);
-        return paginatedProducts;
+    public RestPageImpl<ProductDto> index(@PageableDefault(size = 12) Pageable pageable,
+                                          @RequestParam(name = "min_price", required = false) Double min,
+                                          @RequestParam(name = "max_price", required = false) Double max,
+                                          @RequestParam(name = "name_part", required = false) String partName) {
+        return productService.findPaginatedProducts(min, max, partName, pageable);
     }
 
     @GetMapping("/{id}")

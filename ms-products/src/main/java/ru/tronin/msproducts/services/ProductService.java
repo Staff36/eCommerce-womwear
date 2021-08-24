@@ -13,6 +13,7 @@ import ru.tronin.msproducts.models.entities.Product;
 import ru.tronin.msproducts.repositories.ProductRepository;
 import ru.tronin.msproducts.repositories.specifications.ProductSpecifications;
 import ru.tronin.routinglib.dtos.ProductDto;
+import ru.tronin.routinglib.dtos.RestPageImpl;
 
 import java.util.Optional;
 
@@ -37,7 +38,7 @@ public class ProductService {
         return mapProductToDto(product.get());
     }
 
-    public Page<ProductDto> findPaginatedProducts(Double min, Double max, String partName, Pageable pageable) {
+    public RestPageImpl<ProductDto> findPaginatedProducts(Double min, Double max, String partName, Pageable pageable) {
         Specification<Product> specification = Specification.where(null);
         if (min != null) {
             specification = specification.and(ProductSpecifications.priceGreaterOrEqualsThan(min));
@@ -49,7 +50,8 @@ public class ProductService {
             specification = specification.and(ProductSpecifications.nameLike(partName));
         }
 
-        return productRepository.findAll(specification, pageable).map(this::mapProductToDto);
+        Page<ProductDto> productDtos = productRepository.findAll(specification, pageable).map(this::mapProductToDto);
+        return new RestPageImpl<>(productDtos.getContent(), productDtos.getPageable(), productDtos.getTotalElements());
     }
 
     public void updateProduct(ProductDto product, Long id) {

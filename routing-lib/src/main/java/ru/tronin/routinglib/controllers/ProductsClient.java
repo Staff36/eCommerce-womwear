@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.tronin.routinglib.dtos.ProductDto;
+import ru.tronin.routinglib.dtos.RestPageImpl;
 
 import java.beans.ConstructorProperties;
 
@@ -18,10 +19,10 @@ import java.beans.ConstructorProperties;
 public interface ProductsClient {
 
     @GetMapping("/api/v1/products")
-    PageImpl<ProductDto> index(@PageableDefault(size = 12) Pageable pageable,
-                               @RequestParam(name = "min_price", required = false) Double min,
-                               @RequestParam(name = "max_price", required = false) Double max,
-                               @RequestParam(name = "name_part", required = false) String partName);
+    RestPageImpl<ProductDto> index(@PageableDefault(size = 12) Pageable pageable,
+                                   @RequestParam(name = "min_price", required = false) Double min,
+                                   @RequestParam(name = "max_price", required = false) Double max,
+                                   @RequestParam(name = "name_part", required = false) String partName);
 
     @GetMapping("/api/v1/products/test")
     String testingMethod();

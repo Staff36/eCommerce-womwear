@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ru.tronin.routinglib.dtos.ProductDto;
+import ru.tronin.routinglib.dtos.RestPageImpl;
 
 import java.beans.ConstructorProperties;
 
@@ -18,9 +19,9 @@ public class FeignController{
 
     @GetMapping("/show")
     public Page<ProductDto> index(@PageableDefault(size = 12) Pageable pageable,
-                                  @RequestParam(name = "min_price", required = false) Double min,
-                                  @RequestParam(name = "max_price", required = false) Double max,
-                                  @RequestParam(name = "name_part", required = false) String partName) {
+                                          @RequestParam(name = "min_price", required = false) Double min,
+                                          @RequestParam(name = "max_price", required = false) Double max,
+                                          @RequestParam(name = "name_part", required = false) String partName) {
         int i = 22;
         Page<ProductDto> index = client.index(pageable, min, max, partName);
         return index;
