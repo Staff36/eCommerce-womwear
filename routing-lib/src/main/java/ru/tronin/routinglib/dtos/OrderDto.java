@@ -14,7 +14,7 @@ public class OrderDto {
 
     Long userId;
 
-    List<OrderedProductDto> products;
+    List<ProductDto> products;
 
     LocalDateTime createdAt;
 

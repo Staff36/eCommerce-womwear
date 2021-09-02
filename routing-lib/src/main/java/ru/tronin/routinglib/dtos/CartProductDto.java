@@ -8,8 +8,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CartProductDto {
 
-    Long id;
-
     Long productId;
 
     Integer quantity;

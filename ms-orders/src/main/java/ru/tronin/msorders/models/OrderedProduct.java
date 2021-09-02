@@ -24,8 +24,12 @@ public class OrderedProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
     @JoinColumn(name = "product_id")
-    Long product;
+    Long productId;
 
     Long quantity;
 
@@ -42,5 +46,12 @@ public class OrderedProduct {
     @Column(name = "updated_at")
     @UpdateTimestamp
     LocalDateTime updatedAt;
+
+    public OrderedProduct(CartProduct cartItem) {
+        this.productId = cartItem.getProductId();
+        this.quantity = cartItem.getQuantity();
+        this.orderedProductPrice = cartItem.getCostPerProduct();
+        this.totalPrice = cartItem.getPrice();
+    }
 
 }

@@ -12,6 +12,7 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 public class ProductDto implements Serializable {
+
     Long id;
 
     String name;

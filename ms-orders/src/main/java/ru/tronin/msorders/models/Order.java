@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,6 +40,9 @@ public class Order {
     @Column(name = "title")
     String productTitle;
 
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "created_at")
     @CreationTimestamp
     LocalDateTime createdAt;
@@ -47,5 +51,16 @@ public class Order {
     @UpdateTimestamp
     LocalDateTime updatedAt;
 
+    public Order(Cart cart, Long userId, String address) {
+        this.orderedProducts = new ArrayList<>();
+        this.userId = userId;
+        this.address = address;
+        this.totalSum = cart.getPrice();
+        for (CartProduct cartProduct : cart.getProducts()) {
+            OrderedProduct orderedProduct = new OrderedProduct(cartProduct);
+            orderedProduct.setOrder(this);
+            this.orderedProducts.add(orderedProduct);
+        }
+    }
 
 }

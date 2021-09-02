@@ -10,9 +10,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderedProductDto {
 
-    Long id;
-
-    Long product;
+    Long productId;
 
     Long quantity;
 

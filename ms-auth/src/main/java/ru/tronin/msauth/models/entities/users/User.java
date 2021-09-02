@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import ru.tronin.msauth.models.entities.addresses.UsersAddress;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -32,12 +31,6 @@ public class User {
     LocalDate birthDate;
     @Column(name = "phone_number")
     String phoneNumber;
-    @ManyToMany
-    @JoinTable(name = "users_addresses",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id"))
-    List<UsersAddress> addresses;
-
     @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "users_id"),

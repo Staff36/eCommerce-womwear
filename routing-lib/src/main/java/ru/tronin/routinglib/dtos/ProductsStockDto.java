@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProductsStockDto {
+
     Long id;
 
     Long product;

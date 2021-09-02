@@ -28,11 +28,14 @@ public class CartProduct {
     @JoinColumn(name = "cart_id")
     Cart cart;
 
+    @Column(name = "title")
+    String productTitle;
+
     @Column(name = "product_id")
     Long productId;
 
     @Column(name = "quantity")
-    Integer quantity;
+    Long quantity;
 
     @Column(name = "price_per_product")
     Double costPerProduct;
@@ -50,7 +53,7 @@ public class CartProduct {
 
     public CartProduct(ProductDto product) {
         this.productId = product.getId();
-        this.quantity = 1;
+        this.quantity = 1L;
         this.costPerProduct = product.getCost();
         this.price = this.costPerProduct;
     }
@@ -61,7 +64,7 @@ public class CartProduct {
 
     }
 
-    public void incrementQuantity(int amount) {
+    public void incrementQuantity(Long amount) {
         quantity += amount;
         price = quantity * costPerProduct;
     }

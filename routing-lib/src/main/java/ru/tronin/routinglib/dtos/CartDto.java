@@ -12,12 +12,7 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CartDto {
 
-    UUID id;
-
     List<CartProductDto> items;
-
     Double price;
-
-    Long userId;
 
 }

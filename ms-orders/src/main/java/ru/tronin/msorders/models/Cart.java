@@ -27,16 +27,15 @@ public class Cart {
     UUID id;
 
     @OneToMany(mappedBy = "cart", orphanRemoval = true)
-    List<CartProduct> items;
+    List<CartProduct> products;
 
     @Column(name = "price")
     Double price;
 
-    @Column
+    @Column(name = "user_id")
     Long userId;
 
-    @Column(name = "title")
-    String productTitle;
+
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -47,7 +46,7 @@ public class Cart {
     LocalDateTime updatedAt;
 
     public void add(CartProduct cartProduct) {
-        for (CartProduct product : this.items) {
+        for (CartProduct product : this.products) {
             if (product.getProductId().equals(cartProduct.getProductId())) {
                 product.incrementQuantity(cartProduct.getQuantity());
                 recalculate();
@@ -55,28 +54,28 @@ public class Cart {
             }
         }
 
-        this.items.add(cartProduct);
+        this.products.add(cartProduct);
         cartProduct.setCart(this);
         recalculate();
     }
 
     public void recalculate() {
         price = 0D;
-        for (CartProduct cartProduct : items) {
+        for (CartProduct cartProduct : products) {
             price += cartProduct.getPrice();
         }
     }
 
     public void clear() {
-        for (CartProduct cartProduct : items) {
+        for (CartProduct cartProduct : products) {
             cartProduct.setCart(null);
         }
-        items.clear();
+        products.clear();
         recalculate();
     }
 
     public CartProduct getItemByProductId(Long productId) {
-        for (CartProduct cp : items) {
+        for (CartProduct cp : products) {
             if (cp.getProductId().equals(productId)) {
                 return cp;
             }
@@ -85,7 +84,7 @@ public class Cart {
     }
 
     public void merge(Cart another) {
-        for (CartProduct cp : another.items) {
+        for (CartProduct cp : another.products) {
             add(cp);
         }
     }
