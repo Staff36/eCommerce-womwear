@@ -13,8 +13,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class ProductDto implements Serializable {
     Long id;
+
     String name;
+
     String description;
+
     Double cost;
+
     String category;
+
 }

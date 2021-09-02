@@ -3,7 +3,7 @@ package ru.tronin.msorders;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "ru.tronin")
 public class MsOrdersApplication {
 
     public static void main(String[] args) {

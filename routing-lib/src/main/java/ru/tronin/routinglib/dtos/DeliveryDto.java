@@ -1,13 +1,18 @@
-package ru.tronin.msauth.models.dto;
+package ru.tronin.routinglib.dtos;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthResponseDto {
-    String token;
+public class DeliveryDto {
+    Long id;
+
+    Long order;
+
+    Long address;
+
+    Double coast;
+
 }

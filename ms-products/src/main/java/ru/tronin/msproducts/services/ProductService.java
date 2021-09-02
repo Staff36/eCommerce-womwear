@@ -13,9 +13,10 @@ import ru.tronin.msproducts.models.entities.Product;
 import ru.tronin.msproducts.repositories.ProductRepository;
 import ru.tronin.msproducts.repositories.specifications.ProductSpecifications;
 import ru.tronin.routinglib.dtos.ProductDto;
-import ru.tronin.routinglib.dtos.RestPageImpl;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Data
@@ -38,7 +39,7 @@ public class ProductService {
         return mapProductToDto(product.get());
     }
 
-    public RestPageImpl<ProductDto> findPaginatedProducts(Double min, Double max, String partName, Pageable pageable) {
+    public Page<ProductDto> findPaginatedProducts(Double min, Double max, String partName, Pageable pageable) {
         Specification<Product> specification = Specification.where(null);
         if (min != null) {
             specification = specification.and(ProductSpecifications.priceGreaterOrEqualsThan(min));
@@ -49,9 +50,7 @@ public class ProductService {
         if (partName != null) {
             specification = specification.and(ProductSpecifications.nameLike(partName));
         }
-
-        Page<ProductDto> productDtos = productRepository.findAll(specification, pageable).map(this::mapProductToDto);
-        return new RestPageImpl<>(productDtos.getContent(), productDtos.getPageable(), productDtos.getTotalElements());
+        return productRepository.findAll(specification, pageable).map(this::mapProductToDto);
     }
 
     public void updateProduct(ProductDto product, Long id) {
@@ -73,8 +72,16 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    public List<ProductDto> findProductByIdsList(List<Long> ids) {
+        return productRepository.findAllByIdIn(ids)
+                .stream()
+                .map(this::mapProductToDto)
+                .collect(Collectors.toList());
+    }
 
     public Optional<Product> findProductById(Long id) {
         return productRepository.findById(id);
     }
+
+
 }

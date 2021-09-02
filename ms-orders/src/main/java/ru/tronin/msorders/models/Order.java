@@ -23,15 +23,22 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
     @Column(name = "user_id")
-    Long user;
+    Long userId;
+
     @ManyToMany
     @JoinTable(name = "orders__ordered_products",
             joinColumns = @JoinColumn(name = "orders_id"),
             inverseJoinColumns = @JoinColumn(name = "ordered_products_id"))
     List<OrderedProduct> orderedProducts;
+
     @Column(name = "total_sum")
     Double totalSum;
+
+    @Column(name = "title")
+    String productTitle;
+
     @Column(name = "created_at")
     @CreationTimestamp
     LocalDateTime createdAt;

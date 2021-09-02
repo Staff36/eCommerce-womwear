@@ -1,4 +1,4 @@
-package ru.tronin.msauth.models.dto;
+package ru.tronin.routinglib.dtos;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -11,6 +11,9 @@ import java.util.List;
 public class SignUpRequestDto {
 
     String email;
+
     String password;
+
     List<String> roles;
+
 }

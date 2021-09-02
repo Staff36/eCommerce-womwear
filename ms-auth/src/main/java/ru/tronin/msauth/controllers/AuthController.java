@@ -5,13 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.tronin.corelib.interfaces.ITokenService;
 import ru.tronin.corelib.models.UserInfo;
-import ru.tronin.msauth.models.dto.AuthRequestDto;
-import ru.tronin.msauth.models.dto.AuthResponseDto;
-import ru.tronin.msauth.models.dto.SignUpRequestDto;
 import ru.tronin.msauth.models.entities.users.Role;
 import ru.tronin.msauth.models.entities.users.User;
 import ru.tronin.msauth.services.RolesService;
 import ru.tronin.msauth.services.UserService;
+import ru.tronin.routinglib.dtos.AuthRequestDto;
+import ru.tronin.routinglib.dtos.AuthResponseDto;
+import ru.tronin.routinglib.dtos.SignUpRequestDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerUser(@RequestBody SignUpRequestDto signUpRequest){
+    public void registerUser(@RequestBody SignUpRequestDto signUpRequest) {
         User user = new User();
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(signUpRequest.getPassword());
@@ -42,9 +42,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public AuthResponseDto authorize(@RequestBody AuthRequestDto request){
-        User user =  userService.findByEmailAndPassword(request.getEmail(), request.getPassword());
-        List<String> roles =  new ArrayList<>();
+    public AuthResponseDto authorize(@RequestBody AuthRequestDto request) {
+        User user = userService.findByEmailAndPassword(request.getEmail(), request.getPassword());
+        List<String> roles = new ArrayList<>();
         user.getRoles().forEach(role -> roles.add(role.getName()));
         UserInfo userInfo = UserInfo.builder()
                 .id(user.getId())
@@ -56,7 +56,7 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public void logout(@RequestHeader(name = "Authorization") String token){
+    public void logout(@RequestHeader(name = "Authorization") String token) {
         tokenService.putTokenToRedis(token);
     }
 

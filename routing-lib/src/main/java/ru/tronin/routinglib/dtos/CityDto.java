@@ -1,12 +1,13 @@
-package ru.tronin.msauth.models.dto;
+package ru.tronin.routinglib.dtos;
 
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthRequestDto {
-    String email;
-    String password;
+@Data
+public class CityDto {
+    Long id;
+    String name;
+    RegionDto region;
 }

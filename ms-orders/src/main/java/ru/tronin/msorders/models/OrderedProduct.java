@@ -26,9 +26,12 @@ public class OrderedProduct {
 
     @JoinColumn(name = "product_id")
     Long product;
+
     Long quantity;
+
     @Column(name = "ordered_product_price")
     Double orderedProductPrice;
+
     @Column(name = "total_price")
     Double totalPrice;
 

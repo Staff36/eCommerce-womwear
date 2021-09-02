@@ -15,6 +15,7 @@ create table products_shop.ordered_products
     quantity                integer not null,
     ordered_product_price   double precision,
     total_price             double precision,
+    title                   varchar(255),
     created_at              timestamp default now(),
     updated_at              timestamp default now()
 );
@@ -25,4 +26,24 @@ create table products_shop.orders__ordered_products (
     primary key (orders_id, ordered_products_id),
     foreign key (orders_id) references orders (id),
     foreign key (ordered_products_id) references ordered_products (id)
+);
+
+create table carts (
+    id          UUID primary key,
+    user_id     integer,
+    price       float,
+    created_at  timestamp default now(),
+    updated_at  timestamp default now()
+);
+
+create table cart_items (
+    id                bigserial primary key,
+    cart_id           UUID references carts (id),
+    product_id        integer,
+    title             varchar(255),
+    quantity          int,
+    price_per_product float,
+    price             float,
+    created_at        timestamp  default now(),
+    updated_at        timestamp  default now()
 );

@@ -25,6 +25,10 @@ public class UsersAddress {
     //Считаю, что тут Игер возможен, так как в 99% случаев адрес будем доставать полностью
     @ManyToOne(fetch = FetchType.EAGER)
     City city;
+
+    @Column(name = "street")
+    String street;
+
     @Column(name = "house_number")
     String houseNumber;
     @Column(name = "flat_number")
