@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.tronin.corelib.exceptions.NoEntityException;
 import ru.tronin.msproducts.models.entities.Product;
+import ru.tronin.msproducts.repositories.CategoriesRepository;
 import ru.tronin.msproducts.repositories.ProductRepository;
 import ru.tronin.msproducts.repositories.specifications.ProductSpecifications;
 import ru.tronin.routinglib.dtos.ProductDto;
@@ -29,8 +30,14 @@ public class ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private CategoriesRepository repository;
+
 
     public ProductDto getEntityById(Long id) {
+        if (id == null || id < 0){
+            throw new IllegalArgumentException("Incorrect value for Product " + id);
+        }
         Optional<Product> product = productRepository.findById(id);
 
         if (product.isEmpty()) {
@@ -54,8 +61,12 @@ public class ProductService {
     }
 
     public void updateProduct(ProductDto product, Long id) {
-        ProductDto productFromDB = getEntityById(id);
-
+        Product productFromDB = productRepository.findById(id).orElseThrow(()-> new NoEntityException("Entity, you try to update- not found"));
+        productFromDB.setName(product.getName());
+        productFromDB.setDescription(product.getDescription());
+        productFromDB.setCost(product.getCost());
+        productFromDB.setCategory(getRepository().findCategoryByName(product.getCategory()));
+        productRepository.save(productFromDB);
     }
 
     private ProductDto mapProductToDto(Product product) {
@@ -73,14 +84,16 @@ public class ProductService {
     }
 
     public List<ProductDto> findProductByIdsList(List<Long> ids) {
+        if (ids == null){
+            throw new IllegalArgumentException("Incorrect value for List of id's is null");
+        }
+        if (ids.isEmpty()){
+            throw new NoEntityException("List of id's is empty");
+        }
         return productRepository.findAllByIdIn(ids)
                 .stream()
                 .map(this::mapProductToDto)
                 .collect(Collectors.toList());
-    }
-
-    public Optional<Product> findProductById(Long id) {
-        return productRepository.findById(id);
     }
 
 

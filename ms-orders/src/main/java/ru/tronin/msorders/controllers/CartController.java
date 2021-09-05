@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.tronin.corelib.interfaces.ITokenService;
 import ru.tronin.corelib.models.UserInfo;
@@ -15,7 +16,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/cart")
-@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CartController {
 
@@ -26,6 +26,7 @@ public class CartController {
     ITokenService tokenService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public UUID createNewCart(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String token) {
         if (token == null) {
             return cartService.getCartForUser(null, null);

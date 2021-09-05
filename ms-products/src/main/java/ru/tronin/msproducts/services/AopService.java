@@ -16,7 +16,7 @@ import java.util.List;
 public class AopService {
 
     //Название метода в стиле Spring
-    @After("execution(public * ru.tronin.msproducts.controllers.ProductsController.index(..))")
+    @After("execution(public * ru.tronin.msproducts.controllers.ProductsController.showPaginatedProducts(..))")
     public void afterShowingProductsDisplayRequestParameters(JoinPoint joinPoint){
         List<Object> args = Arrays.stream(joinPoint.getArgs()).toList();
         if (args.size() == 0){

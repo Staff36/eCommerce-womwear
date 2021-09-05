@@ -30,11 +30,11 @@ public class ProductsController {
     private ProductService productService;
 
     @GetMapping()
-    public Page<ProductDto> index(@PageableDefault(size = 12) Pageable pageable,
-                                  @RequestParam(name = "min_price", required = false) Double min,
-                                  @RequestParam(name = "max_price", required = false) Double max,
-                                  @RequestParam(name = "name_part", required = false) String partName) {
-        return productService.findPaginatedProducts(min, max, partName, pageable);
+    public Page<ProductDto> showPaginatedProducts(@PageableDefault(size = 12) Pageable pageable,
+                                                  @RequestParam(name = "min_price", required = false) Double min,
+                                                  @RequestParam(name = "max_price", required = false) Double max,
+                                                  @RequestParam(name = "name_part", required = false) String partName) {
+    return productService.findPaginatedProducts(min, max, partName, pageable);
     }
 
     @GetMapping("/{id}")
@@ -44,13 +44,7 @@ public class ProductsController {
     }
 
     @PostMapping()
-    public ResponseEntity<Object> createProduct(@RequestBody Product product, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            List<String> errors = bindingResult.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(errors, HttpStatus.OK);
-        }
+    public ResponseEntity<Object> createProduct(@RequestBody Product product) {
         productService.create(product);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -69,11 +63,6 @@ public class ProductsController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteById(id);
-    }
-
-    @GetMapping("/test")
-    public String testingMethod() {
-        return MY_SECRET;
     }
 
     @GetMapping("/ids")
