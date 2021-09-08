@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-//@FeignClient("ms-orders")
+@FeignClient("ms-orders")
 public interface OrdersClient {
 
     @PostMapping
@@ -20,4 +20,6 @@ public interface OrdersClient {
 
     @GetMapping
     List<OrderDto> getCurrentUserOrders(@RequestHeader(HttpHeaders.AUTHORIZATION) String token);
+
+
 }

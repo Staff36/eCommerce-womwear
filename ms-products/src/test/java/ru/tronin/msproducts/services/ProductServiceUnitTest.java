@@ -3,16 +3,22 @@ package ru.tronin.msproducts.services;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.cdi.JpaRepositoryExtension;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.tronin.corelib.exceptions.NoEntityException;
 import ru.tronin.msproducts.models.entities.Category;
 import ru.tronin.msproducts.models.entities.Product;
+import ru.tronin.msproducts.repositories.CategoriesRepository;
 import ru.tronin.msproducts.repositories.ProductRepository;
 import ru.tronin.routinglib.dtos.ProductDto;
 
@@ -23,14 +29,17 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
 
+@ExtendWith({SpringExtension.class})
 @SpringBootTest(classes = {ProductService.class, ModelMapper.class})
 public class ProductServiceUnitTest {
 
-    @Autowired
-    ProductService productService;
-
     @MockBean
     ProductRepository productRepository;
+
+
+
+    @Autowired
+    ProductService productService;
 
     final static Long ID = 1L;
     final static String PRODUCT_NAME = "test name";

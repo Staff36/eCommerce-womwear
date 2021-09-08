@@ -8,7 +8,7 @@ import ru.tronin.routinglib.dtos.CartDto;
 
 import java.util.UUID;
 
-@FeignClient("ms-orders")
+//@FeignClient("ms-orders")
 public interface CartsClient {
 
     @PostMapping

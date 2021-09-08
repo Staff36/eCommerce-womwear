@@ -38,7 +38,6 @@ public class ProductsController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ProductDto showProduct(@PathVariable Long id) {
         return productService.getEntityById(id);
     }

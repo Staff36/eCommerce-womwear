@@ -33,7 +33,7 @@ public class ProductControllerUnitTest {
     ObjectMapper mapper;
 
     @Test
-    public void showPaginatedProducts() throws Exception {
+    public void showPaginatedProductsTest() throws Exception {
 //        Request without parameters
         mockMvc.perform(get("/api/v1/products")
                     .contentType(MediaType.APPLICATION_JSON))
