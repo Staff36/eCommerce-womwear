@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.tronin.corelib.interfaces.ITokenService;
 import ru.tronin.corelib.models.UserInfo;
@@ -24,16 +25,15 @@ public class CartController {
     @Autowired
     CartService cartService;
 
-    @Autowired
-    ITokenService tokenService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UUID createNewCart(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String token) {
-        if (token == null) {
+    public UUID createNewCart() {
+
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == null) {
             return cartService.getCartForUser(null, null);
         }
-        UserInfo userInfo = tokenService.parseToken(token);
+        UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return cartService.getCartForUser(userInfo.getId(), null);
     }
 

@@ -9,10 +9,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/WomWear-Storage/womwear-config
+          uri: https://github.com/Staff36/config-repo-for-wom-wear
           default-label: main
-          username: WomWear-Storage
-          password: StorageForWomWear
           clone-on-start: true
 
 #eureka:

@@ -1,10 +1,10 @@
-package ru.tronin.msdelivery;
+package ru.tronin.frontserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MsDeliveryApplicationTests {
+class FrontServerApplicationTests {
 
     @Test
     void contextLoads() {
