@@ -10,5 +10,16 @@ angular.module('app').controller('ordersController', function ($scope, $http) {
         });
     };
 
+    $scope.calculateSumOfOneOrder = function (order){
+        var totalSum = 0;
+        for (let i = 0; i < order.products.length; i++) {
+            totalSum += $scope.calculateSumOfOneOrderPosition(order.products[i]);
+        }
+        return totalSum;
+    }
+    $scope.calculateSumOfOneOrderPosition = function (product){
+        return product.orderedProductPrice * product.quantity;
+    }
+
     $scope.showMyOrders();
 });

@@ -15,6 +15,7 @@ import ru.tronin.msproducts.repositories.ProductRepository;
 import ru.tronin.msproducts.repositories.specifications.ProductSpecifications;
 import ru.tronin.routinglib.dtos.ProductDto;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class ProductService {
 
 
     public ProductDto getEntityById(Long id) {
-        if (id == null || id < 0){
+        if (id == null || id < 0) {
             throw new IllegalArgumentException("Incorrect value for Product " + id);
         }
         Optional<Product> product = productRepository.findById(id);
@@ -61,7 +62,7 @@ public class ProductService {
     }
 
     public void updateProduct(ProductDto product, Long id) {
-        Product productFromDB = productRepository.findById(id).orElseThrow(()-> new NoEntityException("Entity, you try to update- not found"));
+        Product productFromDB = productRepository.findById(id).orElseThrow(() -> new NoEntityException("Entity, you try to update- not found"));
         productFromDB.setName(product.getName());
         productFromDB.setDescription(product.getDescription());
         productFromDB.setCost(product.getCost());
@@ -84,17 +85,10 @@ public class ProductService {
     }
 
     public List<ProductDto> findProductByIdsList(List<Long> ids) {
-        if (ids == null){
-            throw new IllegalArgumentException("Incorrect value for List of id's is null");
-        }
-        if (ids.isEmpty()){
-            throw new NoEntityException("List of id's is empty");
-        }
-        return productRepository.findAllByIdIn(ids)
-                .stream()
-                .map(this::mapProductToDto)
-                .collect(Collectors.toList());
+        return productRepository.findAllByIdIn(ids).stream().map(this::toDto).collect(Collectors.toList());
     }
 
-
+    private ProductDto toDto(Product product) {
+        return modelMapper.map(product, ProductDto.class);
+    }
 }

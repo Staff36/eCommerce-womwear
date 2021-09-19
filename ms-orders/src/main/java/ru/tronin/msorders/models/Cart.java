@@ -26,7 +26,7 @@ public class Cart {
     @Column(name = "id")
     UUID id;
 
-    @OneToMany(mappedBy = "cart", orphanRemoval = true)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     List<CartProduct> products;
 
     @Column(name = "price")
@@ -34,7 +34,6 @@ public class Cart {
 
     @Column(name = "user_id")
     Long userId;
-
 
 
     @Column(name = "created_at")
@@ -46,9 +45,9 @@ public class Cart {
     LocalDateTime updatedAt;
 
     public void add(CartProduct cartProduct) {
-        for (CartProduct product : this.products) {
-            if (product.getProductId().equals(cartProduct.getProductId())) {
-                product.incrementQuantity(cartProduct.getQuantity());
+        for (CartProduct ci : this.products) {
+            if (ci.getProductId() == cartProduct.getProductId()) {
+                ci.incrementQuantity(cartProduct.getQuantity());
                 recalculate();
                 return;
             }
@@ -75,6 +74,9 @@ public class Cart {
     }
 
     public CartProduct getItemByProductId(Long productId) {
+        if (products == null) {
+            return null;
+        }
         for (CartProduct cp : products) {
             if (cp.getProductId().equals(productId)) {
                 return cp;

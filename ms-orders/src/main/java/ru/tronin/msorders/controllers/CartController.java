@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.tronin.corelib.interfaces.ITokenService;
@@ -14,6 +16,7 @@ import ru.tronin.corelib.models.UserInfo;
 import ru.tronin.msorders.services.CartService;
 import ru.tronin.routinglib.dtos.CartDto;
 
+import java.security.Principal;
 import java.util.UUID;
 
 
@@ -30,10 +33,11 @@ public class CartController {
     @ResponseStatus(HttpStatus.CREATED)
     public UUID createNewCart() {
 
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == null) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal == null || principal instanceof String) {
             return cartService.getCartForUser(null, null);
         }
-        UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserInfo userInfo = (UserInfo) principal;
         return cartService.getCartForUser(userInfo.getId(), null);
     }
 

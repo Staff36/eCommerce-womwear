@@ -10,12 +10,12 @@ public class CartProductDto {
 
     Long productId;
 
-    Integer quantity;
+    Long quantity;
 
     Double costPerProduct;
 
     Double price;
 
-    String productTitle;
+    String name;
 
 }

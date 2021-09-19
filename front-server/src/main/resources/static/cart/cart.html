@@ -2,21 +2,23 @@
 <table ng-show="happyUserCart.items.length > 0" class="table table-hover" cellpadding="0" cellspacing="0">
     <thead>
     <tr>
-        <td>Название</td>
+        <td>#</td>
+        <td>Наименование</td>
         <td>Количество</td>
         <td>Цена</td>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="oi in happyUserCart.items">
-        <td>{{oi.productTitle}}</td>
+        <td>{{oi.productId}}</td>
+        <td>{{oi.name}}</td>
         <td>{{oi.quantity}}</td>
-        <td>{{oi.pricePerProduct + ' x ' + oi.quantity + ' = ' + oi.price}}</td>
+        <td>{{oi.costPerProduct + ' x ' + oi.quantity + ' = ' + oi.price}}</td>
     </tr>
     <tr>
         <td>Итого</td>
         <td></td>
-        <td>{{happyUserCart.totalPrice}}</td>
+        <td>{{happyUserCart.price}}</td>
     </tr>
     </tbody>
 </table>

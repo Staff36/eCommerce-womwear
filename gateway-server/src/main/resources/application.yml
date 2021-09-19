@@ -42,8 +42,7 @@ spring:
         - id: ms-orders
           uri: lb://ms-orders
           predicates:
-          - Path=/api/*/orders/**
-          - Path=/api/*/cart/**
+            - Path=/api/*/cart/**, /api/*/orders/**
 
 
 

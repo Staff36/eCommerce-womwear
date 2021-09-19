@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "cart_products")
+@Table(name = "cart_items")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CartProduct {
 
@@ -28,8 +28,8 @@ public class CartProduct {
     @JoinColumn(name = "cart_id")
     Cart cart;
 
-    @Column(name = "title")
-    String productTitle;
+    @Column(name = "name")
+    String name;
 
     @Column(name = "product_id")
     Long productId;
@@ -51,7 +51,23 @@ public class CartProduct {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Override
+    public String toString() {
+        return "CartProduct{" +
+                "id=" + id +
+                ", cart=" + cart.getId() +
+                ", productTitle='" + name + '\'' +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                ", costPerProduct=" + costPerProduct +
+                ", price=" + price +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+
     public CartProduct(ProductDto product) {
+        this.name = product.getName();
         this.productId = product.getId();
         this.quantity = 1L;
         this.costPerProduct = product.getCost();

@@ -14,10 +14,13 @@ public class OrderDto {
 
     Long userId;
 
-    List<ProductDto> products;
+    List<OrderedProductDto> products;
+
+    String address;
 
     LocalDateTime createdAt;
 
     LocalDateTime updatedAt;
+
 
 }

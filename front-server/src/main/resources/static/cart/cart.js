@@ -1,6 +1,8 @@
 angular.module('app').controller('cartController', function ($scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:5555';
-
+    function run(){
+        $scope.loadCart();
+    }
     $scope.clearCart = function () {
         $http({
             url: contextPath + '/api/v1/cart/clear',

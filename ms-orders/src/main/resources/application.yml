@@ -5,6 +5,7 @@ spring:
   application:
     name: ms-orders
 
+
 eureka:
   client:
     service-url:

@@ -3,7 +3,7 @@
     <thead>
     <tr>
         <td>ID</td>
-        <td>Имя пользователя</td>
+
         <td>Цена</td>
         <td>Адрес доставки</td>
         <td>Дата создания</td>
@@ -12,10 +12,9 @@
     <tbody>
     <tr ng-repeat="o in MyOrders">
         <td>#{{o.id}}</td>
-        <td>{{o.username}}</td>
-        <td>{{o.totalPrice}}</td>
+        <td>{{calculateSumOfOneOrder(o)}}</td>
         <td>{{o.address}}</td>
-        <td>{{o.creationDateTime}}</td>
+        <td>{{o.createdAt}}</td>
     </tr>
     </tbody>
 </table>

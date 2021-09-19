@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -32,13 +34,11 @@ public class Order {
     @JoinTable(name = "orders__ordered_products",
             joinColumns = @JoinColumn(name = "orders_id"),
             inverseJoinColumns = @JoinColumn(name = "ordered_products_id"))
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     List<OrderedProduct> orderedProducts;
 
     @Column(name = "total_sum")
     Double totalSum;
-
-    @Column(name = "title")
-    String productTitle;
 
     @Column(name = "address")
     private String address;
@@ -52,15 +52,17 @@ public class Order {
     LocalDateTime updatedAt;
 
     public Order(Cart cart, Long userId, String address) {
-        this.orderedProducts = new ArrayList<>();
+        this.orderedProducts = cart.getProducts().stream().map(cartProduct -> {
+            OrderedProduct orderedProduct = new OrderedProduct();
+            orderedProduct.setOrder(this);
+            orderedProduct.setOrderedProductPrice(cartProduct.getCostPerProduct());
+            orderedProduct.setProductId(cartProduct.getProductId());
+            orderedProduct.setQuantity(cartProduct.getQuantity());
+            return orderedProduct;
+        }).collect(Collectors.toList());
         this.userId = userId;
         this.address = address;
         this.totalSum = cart.getPrice();
-        for (CartProduct cartProduct : cart.getProducts()) {
-            OrderedProduct orderedProduct = new OrderedProduct(cartProduct);
-            orderedProduct.setOrder(this);
-            this.orderedProducts.add(orderedProduct);
-        }
     }
 
 }
