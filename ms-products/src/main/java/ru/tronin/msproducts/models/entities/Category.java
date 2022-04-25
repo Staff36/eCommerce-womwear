@@ -33,4 +33,8 @@ public class Category {
     @UpdateTimestamp
     LocalDateTime updatedAt;
 
+    public Category(String name, List<Product> products) {
+        this.name = name;
+        this.products = products;
+    }
 }

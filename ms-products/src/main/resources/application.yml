@@ -1,0 +1,17 @@
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      default-zone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+spring:
+  application:
+      name: ms-products
+
+
+
+
+#jwt:
+#  secret: 71d1edd38fcf979690d07b2b840d98547d57ac2c79a45bc3218fb4d50

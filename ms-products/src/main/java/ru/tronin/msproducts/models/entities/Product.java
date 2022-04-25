@@ -24,7 +24,6 @@ public class Product {
     String description;
     Double cost;
 
-
     @ManyToOne(targetEntity = Category.class)
     @JoinColumn(name = "category", referencedColumnName = "id")
     Category category;

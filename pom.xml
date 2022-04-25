@@ -14,9 +14,12 @@
     <version>0.0.1</version>
     <name>womwear</name>
     <packaging>pom</packaging>
+
     <properties>
         <java.version>16</java.version>
+        <spring-cloud.version>2020.0.3</spring-cloud.version>
     </properties>
+
     <dependencies>
     </dependencies>
     <modules>
@@ -31,7 +34,22 @@
         <module>ms-warehouse</module>
         <module>ms-delivery</module>
         <module>ms-orders</module>
+
+        <!--  Cloud Services  -->
+        <module>eureka-service</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

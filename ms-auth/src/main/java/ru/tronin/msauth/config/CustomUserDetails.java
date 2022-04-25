@@ -24,7 +24,7 @@ public class CustomUserDetails implements UserDetails {
 
     public static CustomUserDetails fromUserToCustomUserDetails(User user) {
         CustomUserDetails customUserDetails = new CustomUserDetails();
-        customUserDetails.login = user.getLogin();
+        customUserDetails.login = user.getEmail();
         customUserDetails.password = user.getPassword();
         customUserDetails.grantedAuthorities = user.getRoles().stream()
                 .map(Role::getName)
